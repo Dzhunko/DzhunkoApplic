@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/backGrey"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:textAlignment="center"
+        android:layout_height="wrap_content"
+        android:text="@string/operText"
+        android:textColor="@android:color/black"
+        android:textSize="36dp"
+        android:padding="@dimen/big"
+        />
+    <ListView
+        tools:listitem="@layout/item"
+        android:id="@+id/items_list"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_width="match_parent">
+    </ListView>
+    <RelativeLayout
+        android:id="@+id/window"
+        android:layout_weight="3.1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/mainT"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textSize="22sp"
+            android:text="test"/>
+        <ImageButton
+            android:layout_height="56dp"
+            android:layout_width="56dp"
+            android:id="@+id/add_minus_btn"
+            android:background="@drawable/roun_button_red"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/small"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/ic_trending_down_black_24dp"/>
+        <ImageButton
+            android:layout_height="56dp"
+            android:layout_width="56dp"
+            android:id="@+id/add_plus_btn"
+            android:background="@drawable/round_button"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/small"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_trending_up_black_24dp"/>
+    </RelativeLayout>
+
+
+
+
+</LinearLayout>
