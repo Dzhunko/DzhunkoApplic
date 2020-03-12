@@ -1,0 +1,77 @@
+
+        public Item(){}
+        Item(String name, int price) {
+            this.name = name;
+            this.price = price;
+        }
+    }
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+        database=FirebaseDatabase.getInstance();
+        database.setPersistenceEnabled(true);
+
+        myRef= database.getReference("items");
+        final EditText categoryField = (EditText) findViewById(R.id.editField);
+        final EditText priceField = (EditText) findViewById(R.id.editPrice);
+        final Button addButt = (Button) findViewById(R.id.add_butt);
+        final ListView items = (ListView) findViewById(R.id.items);
+        final ItemsAdapter adapter = new ItemsAdapter();
+        items.setAdapter(adapter);
+        addButt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Item item = new Item(categoryField.getText().toString(), Integer.valueOf(priceField.getText().toString()));
+                adapter.add(item);
+                myRef.push().setValue(item);
+            }
+        });
+        Query myQuery = myRef;
+        myQuery.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Item item = dataSnapshot.getValue(Item.class);
+                adapter.add(item);
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private class ItemsAdapter extends ArrayAdapter<Item> {
+        public ItemsAdapter() {
+            super(MainActivity.this, R.layout.item);
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            final View view = getLayoutInflater().inflate(R.layout.item, null);
+            final Item item = getItem(position);
+            ((TextView) view.findViewById(R.id.name)).setText(item.name);
+            ((TextView) view.findViewById(R.id.price)).setText(String.valueOf(item.price));
+            return view;
+        }
+    }
+}
